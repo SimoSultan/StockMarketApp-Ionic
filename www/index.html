@@ -3,22 +3,13 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>
+    <title>yourAppsName</title>
 
     <link rel="manifest" href="manifest.json">
 
-    <!-- un-comment this code to enable service worker
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(() => console.log('service worker installed'))
-          .catch(err => console.log('Error', err));
-      }
-    </script>-->
-
-
     <!-- compiled css output -->
-    <link href="css/ionic.app.css" rel="stylesheet">
+    <link href="css/ionic.app.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
@@ -29,9 +20,47 @@
     <!-- your app's js -->
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/directives.js"></script>
+
+    <!-- Third party libraries -->
+    <!-- <script src="lib/firebase/firebase.js"></script> -->
+    <script src="lib/angularfire/dist/angularfire.min.js"></script>
+    <script src="lib/angular-cache/dist/angular-cache.min.js"></script>
+    <script src="lib/d3/d3.min.js"></script>
+    <script src="lib/nvd3/nv.d3.js"></script>
+    <script src="lib/angular-nvd3/dist/angular-nvd3.min.js"></script>
+    <script src="lib/nv-chart/nv-chart.min.js"></script>
+    <script src="lib/angular-x2js/dist/x2js.min.js"></script>
+    <script src="lib/x2js/xml2json.min.js"></script>
+
+    <!-- <script src="https://www.gstatic.com/firebasejs/3.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.8.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.8.0/firebase-database.js"></script> -->
+
+    <!-- Third party library css -->
+    <link href="lib/nvd3/nv.d3.min.css" rel="stylesheet">
+    <link href="lib/nv-chart/nv-chart.min.css" rel="stylesheet">
+
   </head>
 
-  <body ng-app="starter">
+  <body ng-app="yourAppsName">
     <ion-nav-view></ion-nav-view>
   </body>
+
+  <script src="https://www.gstatic.com/firebasejs/3.8.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAliYVf3YvQdYn9VNKa8LrbrT8c10Z2d8w",
+      authDomain: "stockmarketapp-20658.firebaseapp.com",
+      databaseURL: "https://stockmarketapp-20658.firebaseio.com",
+      projectId: "stockmarketapp-20658",
+      storageBucket: "stockmarketapp-20658.appspot.com",
+      messagingSenderId: "671872872668"
+    };
+    firebase.initializeApp(config);
+  </script>
+
 </html>
