@@ -41,8 +41,8 @@ angular.module('yourAppsName.controllers', [])
 
 }])
 
-.controller('StockCtrl', ['$scope', '$stateParams', '$window', '$ionicPopup', 'followStockService', 'stockDataService', 'dateService', 'chartDataService', 'notesService', 'newsService',
-  function($scope, $stateParams, $window, $ionicPopup, followStockService, stockDataService, dateService, chartDataService, notesService, newsService) {
+.controller('StockCtrl', ['$scope', '$stateParams', '$window', '$ionicPopup', '$cordovaInAppBrowser', 'followStockService', 'stockDataService', 'dateService', 'chartDataService', 'notesService', 'newsService',
+  function($scope, $stateParams, $window, $ionicPopup, $cordovaInAppBrowser, followStockService, stockDataService, dateService, chartDataService, notesService, newsService) {
 
     $scope.ticker = $stateParams.stockTicker;
     $scope.chartView = 4;
@@ -72,8 +72,13 @@ angular.module('yourAppsName.controllers', [])
     };
 
     $scope.openWindow = function (link) {
-      // TODO install and set up inAppBrowswer
-      console.log("openWindow -> " + link);
+      var inAppBrowswerOptions = {
+        location: 'yes',
+        clearcache: 'yes',
+        toolbar: 'yes'
+      };
+
+      $cordovaInAppBroswer.open(link, '_blank_', inAppBrowswerOptions);
     };
 
     $scope.chartViewFunc = function(n) {

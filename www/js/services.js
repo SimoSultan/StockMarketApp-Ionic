@@ -1,17 +1,7 @@
 angular.module('yourAppsName.services', [])
 
 
-// .constant('FIREBASE_URL', 'https://stockmarketapp-20658.firebaseio.com')
-
-
-
-.factory('encodeURIService', function() {
-  return {
-    encode: function(string) {
-      return encodeURIComponent(string).replace(/\"/g, "22").replace(/\ /g, "%20").replace(/[!'()]/g, escape);
-    }
-  };
-})
+// .constant('FIREBASE_URL', 'https://stockmarketapp-test.firebaseio.com/')
 
 
 
@@ -21,7 +11,7 @@ angular.module('yourAppsName.services', [])
 
     var _this = this;
 
-    if (id == 1) {
+    if(id == 1) {
       $ionicModal.fromTemplateUrl('templates/search.html', {
         scope: null,
         controller: 'SearchCtrl'
@@ -30,7 +20,7 @@ angular.module('yourAppsName.services', [])
         _this.modal.show();
       });
     }
-    else if (id == 2) {
+    else if(id == 2) {
       $ionicModal.fromTemplateUrl('templates/login.html', {
         scope: null,
         controller: 'LoginSearchCtrl'
@@ -39,7 +29,7 @@ angular.module('yourAppsName.services', [])
         _this.modal.show();
       });
     }
-    else if (id == 3) {
+    else if(id == 3) {
       $ionicModal.fromTemplateUrl('templates/signup.html', {
         scope: null,
         controller: 'LoginSearchCtrl'
@@ -47,18 +37,28 @@ angular.module('yourAppsName.services', [])
         _this.modal = modal;
         _this.modal.show();
       });
-      }
+    }
   };
 
   this.closeModal = function() {
 
     var _this = this;
 
-    if (!_this.modal) return;
+    if(!_this.modal) return;
     _this.modal.hide();
     _this.modal.remove();
   };
 
+})
+
+
+
+.factory('encodeURIService', function() {
+  return {
+    encode: function(string) {
+      return encodeURIComponent(string).replace(/\"/g, "%22").replace(/\ /g, "%20").replace(/[!'()]/g, escape);
+    }
+  };
 })
 
 
@@ -81,7 +81,6 @@ angular.module('yourAppsName.services', [])
     currentDate: currentDate,
     oneYearAgoDate: oneYearAgoDate
   };
-
 })
 
 
@@ -168,16 +167,16 @@ angular.module('yourAppsName.services', [])
     $rootScope.currentUser = '';
   };
 
-  // var updateStocks = function(stocks) {
-  //   firebaseUserRef.child(getUser().uid).child('stocks').set(stocks);
-  // };
-  //
-  // var updateNotes = function(ticker, notes) {
-  //   firebaseUserRef.child(getUser().uid).child('notes').child(ticker).remove();
-  //   notes.forEach(function(note) {
-  //     firebaseUserRef.child(getUser().uid).child('notes').child(note.ticker).push(note);
-  //   });
-  // };
+  var updateStocks = function(stocks) {
+    firebaseUserRef.child(getUser().uid).child('stocks').set(stocks);
+  };
+
+  var updateNotes = function(ticker, notes) {
+    firebaseUserRef.child(getUser().uid).child('notes').child(ticker).remove();
+    notes.forEach(function(note) {
+      firebaseUserRef.child(getUser().uid).child('notes').child(note.ticker).push(note);
+    });
+  };
 
   var loadUserData = function(authData) {
 
@@ -223,8 +222,8 @@ angular.module('yourAppsName.services', [])
     login: login,
     signup: signup,
     logout: logout,
-    // updateStocks: updateStocks,
-    // updateNotes: updateNotes,
+    updateStocks: updateStocks,
+    updateNotes: updateNotes,
     getUser: getUser
   };
 })
@@ -235,7 +234,7 @@ angular.module('yourAppsName.services', [])
 
   var chartDataCache;
 
-  if (!CacheFactory.get('chartDataCache')) {
+  if(!CacheFactory.get('chartDataCache')) {
 
     chartDataCache = CacheFactory('chartDataCache', {
       maxAge: 60 * 60 * 8 * 1000,
@@ -243,6 +242,10 @@ angular.module('yourAppsName.services', [])
       storageMode: 'localStorage'
     });
   }
+  else {
+    chartDataCache = CacheFactory.get('chartDataCache');
+  }
+
   return chartDataCache;
 })
 
@@ -252,8 +255,7 @@ angular.module('yourAppsName.services', [])
 
   var stockDetailsCache;
 
-  if (!CacheFactory.get('stockDetailsCache')) {
-
+  if(!CacheFactory.get('stockDetailsCache')) {
     stockDetailsCache = CacheFactory('stockDetailsCache', {
       maxAge: 60 * 1000,
       deleteOnExpire: 'aggressive',
@@ -265,7 +267,6 @@ angular.module('yourAppsName.services', [])
   }
 
   return stockDetailsCache;
-
 })
 
 
@@ -274,15 +275,13 @@ angular.module('yourAppsName.services', [])
 
   var stockPriceCache;
 
-  if (!CacheFactory.get('stockPriceCache')) {
-
+  if(!CacheFactory.get('stockPriceCache')) {
     stockPriceCache = CacheFactory('stockPriceCache', {
       maxAge: 5 * 1000,
       deleteOnExpire: 'aggressive',
       storageMode: 'localStorage'
     });
   }
-
   else {
     stockPriceCache = CacheFactory.get('stockPriceCache');
   }
@@ -293,9 +292,10 @@ angular.module('yourAppsName.services', [])
 
 
 .factory('notesCacheService', function(CacheFactory) {
+
   var notesCache;
 
-  if (!CacheFactory.get(notesCache)) {
+  if(!CacheFactory.get('notesCache')) {
     notesCache = CacheFactory('notesCache', {
       storageMode: 'localStorage'
     });
@@ -309,7 +309,7 @@ angular.module('yourAppsName.services', [])
 
 
 
-.factory('fillMyStocksCacheService', function (CacheFactory) {
+.factory('fillMyStocksCacheService', function(CacheFactory) {
 
   var myStocksCache;
 
@@ -322,12 +322,13 @@ angular.module('yourAppsName.services', [])
     myStocksCache = CacheFactory.get('myStocksCache');
   }
 
-  var fillMyStocksCache = function () {
+  var fillMyStocksCache = function() {
 
     var myStocksArray = [
       {ticker: "AAPL"},
       {ticker: "GPRO"},
       {ticker: "FB"},
+      {ticker: "NFLX"},
       {ticker: "TSLA"},
       {ticker: "BRK-A"},
       {ticker: "INTC"},
@@ -335,7 +336,7 @@ angular.module('yourAppsName.services', [])
       {ticker: "GE"},
       {ticker: "BAC"},
       {ticker: "C"},
-      {ticker: "T"},
+      {ticker: "T"}
     ];
 
     myStocksCache.put('myStocks', myStocksArray);
@@ -348,7 +349,7 @@ angular.module('yourAppsName.services', [])
 
 
 
-.factory('myStocksCacheService', function (CacheFactory) {
+.factory('myStocksCacheService', function(CacheFactory) {
 
   var myStocksCache = CacheFactory.get('myStocksCache');
 
@@ -370,36 +371,44 @@ angular.module('yourAppsName.services', [])
 
 
 
-.factory('followStockService', function(myStocksArrayService, myStocksCacheService) {
+.factory('followStockService', function(myStocksArrayService, myStocksCacheService, userService) {
 
   return {
 
-    follow: function (ticker) {
+    follow: function(ticker) {
 
       var stockToAdd = {"ticker": ticker};
 
       myStocksArrayService.push(stockToAdd);
       myStocksCacheService.put('myStocks', myStocksArrayService);
+
+      if(userService.getUser()) {
+        userService.updateStocks(myStocksArrayService);
+      }
     },
 
-    unfollow: function (ticker) {
+    unfollow: function(ticker) {
 
       for (var i = 0; i < myStocksArrayService.length; i++) {
         if(myStocksArrayService[i].ticker == ticker) {
+
           myStocksArrayService.splice(i, 1);
           myStocksCacheService.remove('myStocks');
           myStocksCacheService.put('myStocks', myStocksArrayService);
 
+          if(userService.getUser()) {
+            userService.updateStocks(myStocksArrayService);
+          }
+
           break;
         }
       }
-
     },
 
-    checkFollowing: function (ticker) {
+    checkFollowing: function(ticker) {
 
       for (var i = 0; i < myStocksArrayService.length; i++) {
-        if (myStocksArrayService[i].ticker == ticker) {
+        if(myStocksArrayService[i].ticker == ticker) {
           return true;
         }
       }
@@ -500,7 +509,6 @@ angular.module('yourAppsName.services', [])
           volumeData = [];
 
           jsonData.forEach(function(dayDataObject){
-            // console.log(dayDataObject);
 
             var dateToMillis = dayDataObject.Date,
             date = Date.parse(dateToMillis),
