@@ -36,6 +36,10 @@
   <a ng-click="chartViewFunc(5)" ng-class="chartView == 5 ? 'active' : ''" class="button">Max</a>
 </div>
 
+<!-- QUESTION -->
+<!-- why did you leave chartview 4 as only interactive chart?
+I'm confused why nv-chart doesnt work with other time frames on short button bar-->
+<!--  -->
 <img ng-if="chartView == 1" ng-src="https://chart.finance.yahoo.com/z?s={{ticker}}&t=1d&q=l&l=on&z=m&a=vm" style="width: 100%;">
 <img ng-if="chartView == 2" ng-src="https://chart.finance.yahoo.com/z?s={{ticker}}&t=5d&q=l&l=on&z=m&a=vm" style="width: 100%;">
 <img ng-if="chartView == 3" ng-src="https://chart.finance.yahoo.com/z?s={{ticker}}&t=3m&q=l&l=on&z=m&a=vm" style="width: 100%;">

@@ -191,7 +191,11 @@ angular.module('yourAppsName.controllers', [])
     function getChartData() {
       var promise = chartDataService.getHistoricalData($scope.ticker, $scope.oneYearAgoDate, $scope.todayDate);
         promise.then(function(data){
-
+//
+// QUESTION
+// parsing JSON produces an error 'SyntaxError: Unexpected number in JSON at position ...'
+// this arises when searching for new stock that only has -ve change for the day
+//
         $scope.myData = JSON.parse(data)
           .map(function(series) {
             series.values = series.values.map(function(d) { return {x: d[0], y: d[1] }; });

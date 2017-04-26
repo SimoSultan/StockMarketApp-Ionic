@@ -20,6 +20,9 @@ angular.module('yourAppsName.services', [])
         _this.modal.show();
       });
     }
+    // QUESTION
+    // why did we not use the loginsearch controller?
+    //
     else if(id == 2) {
       $ionicModal.fromTemplateUrl('templates/login.html', {
         scope: null,
@@ -101,8 +104,13 @@ angular.module('yourAppsName.services', [])
   return firebaseDBRef.child('users');
 })
 
-
-
+// QUESTION
+// my main error comes from 'Login Failed authData is not defined' variable.
+// when signing up and/or logging in, the error arises, signup page doesnt close and the firebase user IS created
+// sometimes the logout button appears but I cant recreate the issue
+// notes and stocks are being pushed to the database i.e. working
+// just unsure why it all isn't working....
+//
 .factory('userService', function($rootScope, $window, $timeout, firebaseDBRef, firebaseAuthRef, firebaseUserRef, myStocksArrayService, myStocksCacheService, notesCacheService, modalService) {
 
   var login = function(user, signup) {
