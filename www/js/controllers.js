@@ -72,13 +72,13 @@ angular.module('yourAppsName.controllers', [])
     };
 
     $scope.openWindow = function (link) {
-      var inAppBrowswerOptions = {
+      var inAppBrowserOptions = {
         location: 'yes',
         clearcache: 'yes',
         toolbar: 'yes'
       };
 
-      $cordovaInAppBroswer.open(link, '_blank_', inAppBrowswerOptions);
+      $cordovaInAppBrowser.open(link, '_blank', inAppBrowserOptions);
     };
 
     $scope.chartViewFunc = function(n) {
@@ -190,7 +190,7 @@ angular.module('yourAppsName.controllers', [])
 
     function getChartData() {
       var promise = chartDataService.getHistoricalData($scope.ticker, $scope.oneYearAgoDate, $scope.todayDate);
-      promise.then(function(data){
+        promise.then(function(data){
 
         $scope.myData = JSON.parse(data)
           .map(function(series) {

@@ -125,7 +125,7 @@ angular.module('yourAppsName.services', [])
           modalService.closeModal();
           $timeout(function() {
             $window.location.reload(true);
-          }, 400);
+          }, 50);
         }
       })
       .catch(function(error) {
